@@ -9,7 +9,7 @@ services:
     ports:
       - "8888:8888"
     user: root  
-    working_dir: /home/jovyan/work
+    working_dir: /work
     environment:
       - JUPYTER_ENABLE_LAB=1 
       - NB_USER=${USER}
@@ -22,7 +22,7 @@ services:
       - AWS_BUCKET_NAME=mlflow
       
     volumes:
-      - ${PWD}/notebooks:/notebooks
+      - ${PWD}/notebooks:/work/notebooks
     networks:
       - A
   s3:
