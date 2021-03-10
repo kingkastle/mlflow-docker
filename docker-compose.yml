@@ -3,10 +3,13 @@ services:
   jupyter:
     build:
       context: ./jupyter
+      args:
+          http_proxy: ${http_proxy}
+          https_proxy: ${https_proxy}
     ports:
       - "8888:8888"
     user: root  
-    working_dir: /home/jovyan/work
+    working_dir: /work
     environment:
       - JUPYTER_ENABLE_LAB=1 
       - NB_USER=${USER}
@@ -19,7 +22,7 @@ services:
       - AWS_BUCKET_NAME=mlflow
       
     volumes:
-      - ${PWD}/notebooks:/notebooks
+      - ${PWD}/notebooks:/work/notebooks
     networks:
       - A
   s3:
@@ -57,6 +60,9 @@ services:
       build:
           context: ./mlflow
           dockerfile: Dockerfile
+          args:
+              http_proxy: ${http_proxy}
+              https_proxy: ${https_proxy}
       ports:
           - "5000:5000"
       environment: 
